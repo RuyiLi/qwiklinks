@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "qwiklinks",
+  "author": "Ruyi Li",
+  "version": "0.1",
+  "description": "Access long URLs with short, easy-to-remember names.",
+
+  "icons": {
+    "128": "qw-128.png"
+  },
+
+  "omnibox": {
+    "keyword": "qw"
+  },
+
+  "background": {
+    "scripts": ["qwiklinks.js"]
+  },
+
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "activeTab",
+    "storage",
+    "*://qw/*"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/qw-128.png",
+    "default_title": "qwiklinks",
+    "default_popup": "popup/index.html"
+  },
+
+  "content_security_policy": "style-src 'nonce-style'; script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "__QW_STORAGE_KEY": "qwiklinks",
+  "__QW_COUNT_KEY": "qw_count"
+}
