@@ -2,11 +2,23 @@
   "manifest_version": 2,
   "name": "qwiklinks",
   "author": "Ruyi Li",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Access long URLs with short, easy-to-remember names.",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "qwiklinks@ruyili.ca"
+    }
+  },
+
+  "developer": {
+    "name": "Ruyi Li",
+    "url": "https://ruyili.ca/"
+  },
+
   "icons": {
-    "128": "qw-128.png"
+    "16": "icons/qw-16.png",
+    "128": "icons/qw-128.png"
   },
 
   "omnibox": {
@@ -17,16 +29,20 @@
     "scripts": ["qwiklinks.js"]
   },
 
-  "permissions": ["storage", "*://qw/*"],
+  "permissions": ["storage"],
 
   "browser_action": {
-    "default_icon": "icons/qw-128.png",
+    "default_icon": "/icons/qw-128.png",
     "default_title": "qwiklinks",
-    "default_popup": "popup/index.html"
+    "default_popup": "/ui/index.html"
   },
 
-  "content_security_policy": "style-src 'nonce-style'; script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/ui/index.html"
+  },
 
-  "__QW_STORAGE_KEY": "qw.links",
-  "__QW_COUNT": "qw.count"
+  "content_security_policy": "style-src 'nonce-style'; script-src 'self';",
+
+  "__QW_STORAGE_KEY": "qw.links"
 }

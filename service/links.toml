@@ -1,0 +1,6 @@
+[links]
+gh = "https://github.com/"
+hn = "https://news.ycombinator.com/"
+cal = "https://calendar.google.com/calendar/u/0/r"
+weather = "https://briefsky.app/"
+word = "https://www.thesaurus.com/browse/$1"
