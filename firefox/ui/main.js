@@ -1,16 +1,21 @@
 ;(async function () {
   const { __QW_STORAGE_KEY } = browser.runtime.getManifest()
-  const links = await browser.storage.local
+  let links = await browser.storage.local
     .get(__QW_STORAGE_KEY)
     .then((res) => res[__QW_STORAGE_KEY] || [])
 
   const ERROR_CLASS = 'error'
+  const ROW_CLASS = 'item-row'
   const INPUT_NAME_NAME = 'name'
   const INPUT_URL_NAME = 'url'
 
   const $ = document.querySelector.bind(document)
   const linksContainer = $('#links')
+  const importContainer = $('#import')
   const createBtn = $('#create')
+  const exportBtn = $('#export')
+  const importAppendInput = $('#import-append')
+  const importReplaceInput = $('#import-replace')
 
   const DEBOUNCE_THRESHOLD = 100
   let timeout = null
@@ -66,8 +71,9 @@
     const delBtn = document.createElement('input')
 
     const row = document.createElement('div')
-    row.classList.add('row')
+    row.classList.add(ROW_CLASS)
     row.append(nameInput, urlInput, delBtn)
+
     linksContainer.append(row)
 
     nameInput.value = pair[0]
@@ -100,10 +106,11 @@
   }
 
   // initial render
-  links.forEach(createRow)
+  links.map(createRow)
   checkDupes()
   checkInvalidUrls()
 
+  // row creation
   createBtn.addEventListener('click', function () {
     const pair = ['', '']
     createRow(pair)
@@ -111,6 +118,7 @@
     updateLocalStorage()
   })
 
+  // general links
   document.querySelectorAll('.nav').forEach((nav) =>
     nav.addEventListener('click', function (evt) {
       evt.preventDefault()
@@ -120,4 +128,50 @@
       })
     })
   )
+
+  // export
+  exportBtn.addEventListener('click', function (evt) {
+    evt.preventDefault()
+    browser.runtime.sendMessage({
+      type: 'export',
+      data: JSON.stringify(links),
+    })
+  })
+
+  // import
+  function importLinks(evt, append) {
+    const file = evt.target.files[0]
+    file
+      .text()
+      .then(function (res) {
+        const newLinks = JSON.parse(res)
+        if (append) {
+          // add new links to preexisting ones
+          links.push(...newLinks)
+          newLinks.forEach(createRow)
+        } else {
+          // destructive. replace all existing links with new ones
+          while (linksContainer.children.length > 1) {
+            linksContainer.removeChild(linksContainer.children.item(1))
+          }
+          links = newLinks
+          links.forEach(createRow)
+        }
+        checkDupes()
+        checkInvalidUrls()
+        updateLocalStorage()
+      })
+      .catch(function (err) {
+        console.error('Failed to import:', file, err)
+        alert('Failed to import. See console for more details.')
+      })
+  }
+
+  if (window.location.hash === '#popup') {
+    // tell users to open in new tab because popups are too short-lived for file pickers
+    importContainer.innerHTML = '<strong>[open in tab] to import</strong>'
+  } else {
+    importAppendInput.addEventListener('input', (evt) => importLinks(evt, true))
+    importReplaceInput.addEventListener('input', (evt) => importLinks(evt, false))
+  }
 })()

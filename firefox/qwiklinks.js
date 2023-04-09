@@ -1,11 +1,9 @@
 const { __QW_STORAGE_KEY, version } = browser.runtime.getManifest()
-const DELIMITER = ' '
+const ARGS_DELIMITER = ' '
 console.log(`[v${version}] Qwiklinks`)
 
-async function fetchLinks() {
-  return browser.storage.local
-    .get(__QW_STORAGE_KEY)
-    .then((res) => res[__QW_STORAGE_KEY])
+function fetchLinks() {
+  return browser.storage.local.get(__QW_STORAGE_KEY).then((res) => res[__QW_STORAGE_KEY])
 }
 
 async function fetchLink(path, args) {
@@ -20,6 +18,8 @@ async function fetchLink(path, args) {
   return null
 }
 
+/* Omnibox */
+
 async function searchLinks(path) {
   const links = await fetchLinks()
   return links
@@ -29,7 +29,7 @@ async function searchLinks(path) {
 }
 
 browser.omnibox.onInputEntered.addListener(async function (text, disp) {
-  const [path, ...args] = text.split(DELIMITER)
+  const [path, ...args] = text.split(ARGS_DELIMITER)
   const url = await fetchLink(path, args)
   switch (disp) {
     case 'currentTab':
@@ -47,4 +47,24 @@ browser.omnibox.onInputEntered.addListener(async function (text, disp) {
 browser.omnibox.onInputChanged.addListener(function (text, suggest) {
   const path = text.split('/')[0]
   searchLinks(path).then(suggest)
+})
+
+/* Import/Export */
+
+browser.runtime.onMessage.addListener(function (msg) {
+  if (msg.type === 'export') {
+    const blob = new Blob([msg.data], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    browser.downloads
+      .download({
+        filename: 'qwiklinks.json',
+        url,
+      })
+      .then((id) => console.log('Starting export:', id))
+      .catch((err) => console.error('Failed to start export:', err))
+  }
+})
+
+browser.downloads.onChanged.addListener(function (delta) {
+  if (delta.state && delta.state.current === 'complete') URL.revokeObjectURL(delta.url)
 })

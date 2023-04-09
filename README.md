@@ -7,8 +7,6 @@ Access long URLs with short, easy-to-remember names.
 
 You can use qwiklinks either through an extension on your browser, or as a background service on your local machine.
 
----
-
 ## Extension
 
 <div>
@@ -35,13 +33,11 @@ The qwiklinks extension provides a dashboard to manage your links. This dashbaor
   - [ ] Default arguments
 - [ ] Web dashboard to manage links
 - [x] Autosuggest
-- [ ] Export and import (append/replace)
+- [x] Export and import (append/replace)
 - [ ] Themes
 - [ ] Make help? less sketchy
 - [ ] An actual homepage, so users don't have to read this mess I just wrote up
 - [ ] Switch scripts to deno/node?
-
----
 
 ## Service
 

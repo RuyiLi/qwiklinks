@@ -17,8 +17,8 @@
   },
 
   "icons": {
-    "16": "icons/qw-16.png",
-    "128": "icons/qw-128.png"
+    "16": "/icons/qw-16.png",
+    "128": "/icons/qw-128.png"
   },
 
   "omnibox": {
@@ -29,12 +29,12 @@
     "scripts": ["qwiklinks.js"]
   },
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "downloads"],
 
   "browser_action": {
     "default_icon": "/icons/qw-128.png",
     "default_title": "qwiklinks",
-    "default_popup": "/ui/index.html"
+    "default_popup": "/ui/index.html#popup"
   },
 
   "options_ui": {
