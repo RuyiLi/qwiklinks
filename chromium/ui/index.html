@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<head>
+  <style nonce="style">
+    * {
+      font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gap: 0.5rem;
+      --radius: 0.5rem;
+      --error: #de5d62;
+    }
+
+    html,
+    body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f5f5f5;
+      padding: 1.5rem;
+      font-size: 14px;
+    }
+
+    main {
+      margin: auto;
+      width: 420px;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin: -0.5rem 0 1.5rem;
+    }
+
+    img {
+      position: relative;
+      top: 0.9rem;
+      height: 2.6rem;
+      margin-right: 0.1rem;
+    }
+
+    input {
+      width: 100%;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+
+      border: none;
+      background: #fff;
+      border-radius: var(--radius);
+      outline: 1px solid transparent;
+    }
+
+    input[type='submit'] {
+      cursor: pointer;
+      font-weight: bold;
+      background: #ededed;
+    }
+
+    input[type='submit']:active {
+      background: #e7e7e7;
+    }
+
+    input:hover:not(.error),
+    input[type='text']:focus:not(.error),
+    input[type='text']:active:not(.error) {
+      outline-color: #a7a7a7;
+    }
+
+    input[type='file'] {
+      display: none;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    .cosmetic {
+      pointer-events: none;
+    }
+
+    .error {
+      outline-color: var(--error);
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0;
+      gap: var(--gap);
+      width: 100%;
+    }
+
+    .item-row {
+      display: flex;
+      flex-direction: row;
+      gap: var(--gap);
+      width: 100%;
+    }
+
+    .item-row > :nth-child(1) {
+      width: 7rem;
+    }
+
+    .item-row > :nth-child(2) {
+      flex: 1;
+    }
+
+    .item-row > :nth-child(3) {
+      width: 2rem;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="row">
+      <h1><img src="../icons/qw-128.png" />iklinks</h1>
+      <div class="text-right">
+        <div>
+          <a class="nav" href="/ui/index.html">[open in tab]</a>
+          <a class="nav" href="https://github.com/RuyiLi/qwiklinks">[github]</a>
+          <a class="nav" href="/ui/help.html">[help?]</a>
+          <a id="export" href>[export]</a>
+        </div>
+        <div id="import">
+          import
+          <label id="import-append">
+            <a class="cosmetic" href>[append]</a>
+            <input type="file" accept="application/json" />
+          </label>
+          <label id="import-replace">
+            <a class="cosmetic" href>[replace]</a>
+            <input type="file" accept="application/json" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div id="links" class="col">
+      <div class="item-row">
+        <strong>short name</strong>
+        <strong>url</strong>
+        <strong>del</strong>
+      </div>
+    </div>
+    <input id="create" type="submit" value="+ create" />
+  </main>
+
+  <script src="./main.js"></script>
+</body>

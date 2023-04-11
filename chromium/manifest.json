@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest",
+
+  "manifest_version": 3,
+  "name": "qwiklinks",
+  "author": "Ruyi Li",
+  "version": "0.2",
+  "description": "Access long URLs with short, easy-to-remember names.",
+
+  "icons": {
+    "16": "/icons/qw-16.png",
+    "128": "/icons/qw-128.png"
+  },
+
+  "omnibox": {
+    "keyword": "qw"
+  },
+
+  "background": {
+    "service_worker": "qwiklinks.js"
+  },
+
+  "permissions": ["storage", "downloads"],
+
+  "action": {
+    "default_icon": {
+      "16": "/icons/qw-16.png",
+      "128": "/icons/qw-128.png"
+    },
+    "default_title": "qwiklinks",
+    "default_popup": "/ui/index.html"
+  },
+
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/ui/index.html"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "style-src 'nonce-style'; script-src 'self';"
+  },
+
+  "__QW_STORAGE_KEY": "qw.links"
+}
