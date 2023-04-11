@@ -2,8 +2,12 @@ const { __QW_STORAGE_KEY, version } = browser.runtime.getManifest()
 const ARGS_DELIMITER = ' '
 console.log(`[v${version}] Qwiklinks`)
 
+const BUILTIN_LINKS = [['_dash', '/ui/index.html']]
+
 function fetchLinks() {
-  return browser.storage.local.get(__QW_STORAGE_KEY).then((res) => res[__QW_STORAGE_KEY])
+  return browser.storage.local
+    .get(__QW_STORAGE_KEY)
+    .then((res) => BUILTIN_LINKS.concat(res[__QW_STORAGE_KEY]))
 }
 
 async function fetchLink(path, args) {
@@ -20,12 +24,31 @@ async function fetchLink(path, args) {
 
 /* Omnibox */
 
+function escapeXml(str) {
+  // https://developer.chrome.com/docs/extensions/reference/omnibox/#type-SuggestResult
+  // https://stackoverflow.com/a/27979933
+  return str.replace(/[<>&'"]/g, function (c) {
+    switch (c) {
+      case '<':
+        return '&lt;'
+      case '>':
+        return '&gt;'
+      case '&':
+        return '&amp;'
+      case "'":
+        return '&apos;'
+      case '"':
+        return '&quot;'
+    }
+  })
+}
+
 async function searchLinks(path) {
   const links = await fetchLinks()
   return links
     .filter(([name]) => name.startsWith(path) || name.includes(path))
     .sort(([name]) => !name.startsWith(path))
-    .map(([name, url]) => ({ content: name, description: url }))
+    .map(([name, url]) => ({ content: name, description: escapeXml(url) }))
 }
 
 browser.omnibox.onInputEntered.addListener(async function (text, disp) {
@@ -49,7 +72,7 @@ browser.omnibox.onInputChanged.addListener(function (text, suggest) {
   searchLinks(path).then(suggest)
 })
 
-/* Import/Export */
+/* Export */
 
 browser.runtime.onMessage.addListener(function (msg) {
   if (msg.type === 'export') {

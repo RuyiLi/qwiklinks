@@ -101,12 +101,13 @@
     delBtn.addEventListener('click', function () {
       linksContainer.removeChild(row)
       links.splice(links.indexOf(pair), 1)
+      checkDupes()
       updateLocalStorage()
     })
   }
 
   // initial render
-  links.map(createRow)
+  links.forEach(createRow)
   checkDupes()
   checkInvalidUrls()
 
@@ -168,7 +169,8 @@
   }
 
   if (window.location.hash === '#popup') {
-    // tell users to open in new tab because popups are too short-lived for file pickers
+    // firefox: tell users to open in new tab because popups close when the filepicker takes focus
+    // chrome does not have this quirk
     importContainer.innerHTML = '<strong>[open in tab] to import</strong>'
   } else {
     importAppendInput.addEventListener('input', (evt) => importLinks(evt, true))
