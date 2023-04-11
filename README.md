@@ -1,6 +1,6 @@
 # qwiklinks
 
-<p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" /></p>
+<p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" style="margin-bottom: 1rem" /></p>
 Access long URLs with short, easy-to-remember names.
 
 ![Demo](assets/demo.gif)
