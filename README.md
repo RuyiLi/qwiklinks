@@ -1,6 +1,6 @@
 # qwiklinks
 
-<p><img align="right" src="firefox/icons/qw-128.png" alt="qwiklinks Logo" /></p>
+<p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" /></p>
 Access long URLs with short, easy-to-remember names.
 
 ![Demo](assets/demo.gif)
@@ -22,7 +22,7 @@ You can use qwiklinks either through an extension on your browser, or as a backg
 
 The qwiklinks extension allows you to access your links through the browser search bar (for developers, see [omnibox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/omnibox)). Simply type `qw <name>` and hit enter to load the corresponding URL. A list of suggestions matching what you currently have typed will appear as you type the name.
 
-You can specify arguments by inserting placeholders in the form of `$D` in your URL, where `D` is some number between 1 and 9 inclusive. You can then specify arguments by inserting a space after your qwiklink name. For example, to navigate to the "/r/all" subreddit in the below image, one would type `qw r all` into the searchbar. All instances of `$1` in the URL will be replaced by `all`.
+You can specify arguments by inserting placeholders in the form of `$D` in your URL, where `D` is some number between 1 and 9 inclusive. You can then specify arguments, separated by spaces, after the name of the qwiklink. For example, to navigate to the "/r/all" subreddit in the below image, one would type `qw r all` into the searchbar. All instances of `$1` in the URL will be replaced by `all`.
 
 </div>
 
