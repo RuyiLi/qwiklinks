@@ -1,7 +1,9 @@
 # qwiklinks
 
-<p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" style="margin-bottom: 1rem" /></p>
+<p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" /></p>
 Access long URLs with short, easy-to-remember names.
+
+<br><br><br><br>
 
 ![Demo](assets/demo.gif)
 
@@ -17,23 +19,31 @@ You can use qwiklinks either through an extension on your browser, or as a backg
 
 ## Extension
 
-<div>
-<p><img align="right" src="assets/suggest.png" alt="qwiklinks Logo" width="300"/></p>
+The qwiklinks extension allows you to access your links through the browser search bar. Simply type `qw <name>` and hit enter to load the corresponding URL. A list of suggestions matching what you currently have typed will appear as you type the name.
 
-The qwiklinks extension allows you to access your links through the browser search bar (for developers, see [omnibox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/omnibox)). Simply type `qw <name>` and hit enter to load the corresponding URL. A list of suggestions matching what you currently have typed will appear as you type the name.
+<img src="assets/suggest.png" alt="qwiklinks Search" width="400"/>
 
-You can specify arguments by inserting placeholders in the form of `$D` in your URL, where `D` is some number between 1 and 9 inclusive. You can then specify arguments, separated by spaces, after the name of the qwiklink. For example, to navigate to the "/r/all" subreddit in the below image, one would type `qw r all` into the searchbar. All instances of `$1` in the URL will be replaced by `all`.
+### Installation
 
-</div>
+- [Firefox](https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/)
 
-<div>
-<p><img align="right" src="assets/popup.png" alt="qwiklinks Logo" width="300"/></p>
+### Arguments
+
+You can specify arguments by inserting placeholders such as $1, $2, and $3 in your URL. To use them, you can specify arguments, separated by spaces, after the name of the qwiklink (e.g. <code>qw mail 0</code>).
+
+<p>
+<img align="right" src="assets/popup.png" alt="qwiklinks Extension Popup" width="300"/>
+</p>
+
+### Dashboard
 
 The qwiklinks extension provides a dashboard to manage your links. This dashboard is accessible by clicking the qwiklinks extension through the toolbar or through the options page (Extensions > Manage Extensions > Ellipsis on qwiklinks > Options). You can also open it in its own tab by opening the popup and pressing `[open in tab]`, or by going to the `qw _dash` qwiklink.
 
-</div>
+- A red outline on a name field indicates that it is a duplicate.
+- A red outline on a url field indicates that it is an invalid URL.
+- If there are two links with duplicate names, qwiklinks will use the first one.
 
-#### Import/Export
+### Import/Export
 
 You can export your links to a file, which can then be shared across browsers or with other users through the import options. On Firefox, the import options will only appear when the dashboard is open in its own tab (due to some limitations of popups for security reasons).
 
@@ -41,10 +51,6 @@ There are two types of import options:
 
 - `[append]` will add all of the new links on top of your existing ones, so you won't lose anything.
 - `[replace]` is a **destructive** action. It will override all of your existing links and replace them with the new ones. Take care when using this option (TODO prompt?)
-
-### Installation
-
-- [Firefox](https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/)
 
 ### Roadmap
 
