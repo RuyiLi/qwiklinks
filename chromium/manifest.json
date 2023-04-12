@@ -37,7 +37,7 @@
   },
 
   "content_security_policy": {
-    "extension_pages": "style-src 'nonce-style'; script-src 'self';"
+    "extension_pages": "style-src 'nonce-style'; script-src 'self'; object-src 'self';"
   },
 
   "__QW_STORAGE_KEY": "qw.links"

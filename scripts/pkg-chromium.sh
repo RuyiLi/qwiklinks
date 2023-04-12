@@ -1,6 +1,7 @@
 #!/bin/bash
 # make sure to run copy-icons first
 mkdir -p dist
+# this doesnt remove files so maybe we run a rmr
 cp -r firefox/ui/ firefox/qwiklinks.js chromium/
 shopt -s globstar
 sed -i 's/browser/chrome/' chromium/**/*.js
