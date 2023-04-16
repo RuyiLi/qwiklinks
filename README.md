@@ -1,3 +1,12 @@
+<p align="center">
+
+[Homepage](https://ruyili.ca/qwiklinks/) | [GitHub](https://github.com/RuyiLi/qwiklinks)
+
+[Firefox Addon](https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/) |
+[Chrome/Edge Extension](https://chrome.google.com/webstore/detail/qwiklinks/leahklkmdooljnnljcheihjjcligjbmc)
+
+</p>
+
 # qwiklinks
 
 <p><img align="right" src="assets/icons/qw-128.png" alt="qwiklinks Logo" /></p>
@@ -5,7 +14,9 @@ Access long URLs with short, easy-to-remember names.
 
 <br><br><br><br>
 
-![Demo](assets/demo.gif)
+## Demo
+
+https://ruyili.ca/qwiklinks/assets/demo.mp4
 
 ## Why
 
@@ -15,21 +26,24 @@ If you've used [GoLinks](https://www.golinks.io/), you can think of it as a "per
 
 ## Usage
 
-You can use qwiklinks either through an extension on your browser, or as a background service on your local machine.
+You can use qwiklinks either through an extension on your browser, or as a background service on your local machine (latter is not recommended for now).
 
 ## Extension
 
 The qwiklinks extension allows you to access your links through the browser search bar. Simply type `qw <name>` and hit enter to load the corresponding URL. A list of suggestions matching what you currently have typed will appear as you type the name.
 
-<img src="assets/suggest.png" alt="qwiklinks Search" width="400"/>
+<p align="center">
+  <img src="assets/suggest.png" alt="qwiklinks Search" width="600"/>
+</p>
 
 ### Installation
 
 - [Firefox](https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/)
+- [Chrome/Edge](https://chrome.google.com/webstore/detail/qwiklinks/leahklkmdooljnnljcheihjjcligjbmc)
 
 ### Arguments
 
-You can specify arguments by inserting placeholders such as $1, $2, and $3 in your URL. To use them, you can specify arguments, separated by spaces, after the name of the qwiklink (e.g. <code>qw mail 0</code>).
+You can specify arguments by inserting placeholders such as $1, $2, and $3 in your URL. To use these placeholders, simply type the arguments after the qwiklink name, separated by spaces; for instance, `qw mail 0` replaces all occurences of `$1` in the "mail" qwiklink URL with `0`.
 
 <p>
 <img align="right" src="assets/popup.png" alt="qwiklinks Extension Popup" width="300"/>
@@ -37,11 +51,19 @@ You can specify arguments by inserting placeholders such as $1, $2, and $3 in yo
 
 ### Dashboard
 
-The qwiklinks extension provides a dashboard to manage your links. This dashboard is accessible by clicking the qwiklinks extension through the toolbar or through the options page (Extensions > Manage Extensions > Ellipsis on qwiklinks > Options). You can also open it in its own tab by opening the popup and pressing `[open in tab]`, or by going to the `qw _dash` qwiklink.
+The qwiklinks extension provides a dashboard to manage your links.
+
+1. Click the extension icon on the browser toolbar
+2. Use the `_dash` qwiklink (`qw _dash`)
+3. Open the extension's options page.
+
+### Errors
+
+If you see a red outline around your field
 
 - A red outline on a name field indicates that it is a duplicate.
-- A red outline on a url field indicates that it is an invalid URL.
-- If there are two links with duplicate names, qwiklinks will use the first one.
+  - In the case of duplicate names, qwiklinks will use the first one.
+- A red outline on a url field indicates that it is an invalid URL. Note that most URLs have to start with a valid protocol, like `https://`
 
 ### Import/Export
 
@@ -59,13 +81,27 @@ There are two types of import options:
 - [x] Autosuggest
 - [x] Export and import (append/replace)
 - [ ] Themes
-- [ ] Make help? less sketchy
-- [ ] An actual homepage, so users don't have to read this mess I just wrote up
+- [x] Make help? less sketchy
 - [ ] Switch scripts to deno/node?
 
-## Service
+### Development
 
-> For now, use of the service is not recommended. It is missing a few features and is a hassle to set up relative to the browser extensions.
+Development is done Firefox-first, with the Chromium code being generated using `scripts/pkg-chromium.sh`. The codebases for the two extensions are practically identical, with a few differences.
+
+- The Firefox extension uses Manifest V2, while the Chromium one uses V3
+- The browser APIs for Firefox use the `browser` namespace, while Chromium uses `chrome`. `chrome` should also work in Firefox, but just to be safe, I'll stick with `browser` for the time being
+
+### Scripts
+
+All scripts live in the `scripts/` directory. You can run `chmod +x scripts/*.sh` to allow direct execution.
+
+- `copy-icons` copies the icons from the `assets/` folder to the unpacked extension directories.
+- `pkg-${browser}` builds the packed extension for the specified browser.
+- `pkg-all` does the same as above but for all supported browsers
+
+## Background Service
+
+> Use of this is not recommended for now. Unless there's demand for this, development will be on hiatus. It's missing a lot of features and is also a hassle to set up relative to the browser extensions.
 
 Enables browser-agnostic link redirection through the `qw/` prefix.
 
@@ -75,7 +111,7 @@ Enables browser-agnostic link redirection through the `qw/` prefix.
 - Add `127.0.0.1 qw` to your hosts file.
 - Install [deno](https://deno.land/).
 - Generate the binary by running `deno compile --allow-read --allow-net --output qwiklinks service/main.ts`.
-- Execute the compiled binary with elevated permissions (e.g. `sudo /path/to/qwiklinks`)
+- Run it with elevated permissions (e.g. `sudo /path/to/qwiklinks`)
 
 ### Roadmap
 
@@ -83,18 +119,3 @@ Enables browser-agnostic link redirection through the `qw/` prefix.
 - [ ] Web dashboard to manage links
 - [ ] Export and import links
 - [x] Hot reload links.toml
-
-## Development
-
-Development is done Firefox-first, with the Chromium code being generated using `scripts/pkg-chromium.sh`. The codebases for the two extensions are practically identical, with a few differences.
-
-- The Firefox extension uses Manifest V2, while the Chromium one uses V3
-- The browser APIs for Firefox use the `browser` namespace, while Chromium uses `chrome`. `chrome` should also work in Firefox, but just to be safe, I will stick with `browser`
-
-### Scripts
-
-All scripts live in the `scripts/` directory. It is recommended to run `chmod +x scripts/*.sh` prior to running any scripts.
-
-- `copy-icons` copies the icons from the `assets/` folder to the unpacked extension directories.
-- `pkg-${browser}` builds the packed extension for the specified browser.
-- `pkg-all` does the same as above but for all supported browsers
