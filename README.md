@@ -1,10 +1,8 @@
 <p align="center">
-
-[Homepage](https://ruyili.ca/qwiklinks/) | [GitHub](https://github.com/RuyiLi/qwiklinks)
-
-[Firefox Addon](https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/) |
-[Chrome/Edge Extension](https://chrome.google.com/webstore/detail/qwiklinks/leahklkmdooljnnljcheihjjcligjbmc)
-
+  <a href="https://ruyili.ca/qwiklinks/">Homepage</a> / <a href="https://github.com/RuyiLi/qwiklinks/">GitHub</a>
+</p>
+<p align="center">
+  <a href="https://addons.mozilla.org/en-CA/firefox/addon/qwiklinks/">Firefox Addon</a> / <a href="https://chrome.google.com/webstore/detail/qwiklinks/leahklkmdooljnnljcheihjjcligjbmc">Chrome & Edge Extension</a>
 </p>
 
 # qwiklinks
@@ -16,7 +14,9 @@ Access long URLs with short, easy-to-remember names.
 
 ## Demo
 
-https://ruyili.ca/qwiklinks/assets/demo.mp4
+
+https://user-images.githubusercontent.com/16544254/232331720-b34f4b99-e59c-4f8f-b7cd-5798b9488f69.mp4
+
 
 ## Why
 
