@@ -86,6 +86,9 @@
     nameInput.name = INPUT_NAME_NAME
     urlInput.name = INPUT_URL_NAME
 
+    nameInput.placeholder = 'name...'
+    urlInput.placeholder = 'url...'
+
     nameInput.addEventListener('input', function () {
       pair[0] = nameInput.value
       checkDupes()
@@ -139,9 +142,18 @@
     })
   })
 
+  function cleanLinks(newLinks) {
+    while (linksContainer.children.length > 1) {
+      linksContainer.removeChild(linksContainer.children.item(1))
+    }
+    links = newLinks
+    links.forEach(createRow)
+  }
+
   // import
   function importLinks(evt, append) {
     const file = evt.target.files[0]
+    const linksBackup = JSON.parse(JSON.stringify(links))
     file
       .text()
       .then(function (res) {
@@ -152,11 +164,7 @@
           newLinks.forEach(createRow)
         } else {
           // destructive. replace all existing links with new ones
-          while (linksContainer.children.length > 1) {
-            linksContainer.removeChild(linksContainer.children.item(1))
-          }
-          links = newLinks
-          links.forEach(createRow)
+          cleanLinks(newLinks)
         }
         checkDupes()
         checkInvalidUrls()
@@ -165,6 +173,7 @@
       .catch(function (err) {
         console.error('Failed to import:', file, err)
         alert('Failed to import. See console for more details.')
+        cleanLinks(linksBackup)
       })
   }
 

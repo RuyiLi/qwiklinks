@@ -2,7 +2,10 @@ const { __QW_STORAGE_KEY, version } = chrome.runtime.getManifest()
 const ARGS_DELIMITER = ' '
 console.log(`[v${version}] Qwiklinks`)
 
-const BUILTIN_LINKS = [['_dash', '/ui/index.html']]
+const BUILTIN_LINKS = [
+  ['_dash', '/ui/index.html'],
+  ['_about', 'https://ruyili.ca/qwiklinks'],
+]
 
 function fetchLinks() {
   return chrome.storage.local
@@ -74,20 +77,23 @@ chrome.omnibox.onInputChanged.addListener(function (text, suggest) {
 
 /* Export */
 
+function createDataUrl(data) {
+  // workaround for chrome. caveat: cannot be larger than 64mb
+  return 'data:application/json;base64,' + btoa(data)
+}
+
 chrome.runtime.onMessage.addListener(function (msg) {
   if (msg.type === 'export') {
-    const blob = new Blob([msg.data], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
+    const url = createDataUrl(msg.data)
     chrome.downloads
-      .download({
-        filename: 'qwiklinks.json',
-        url,
-      })
+      .download({ url, saveAs: true })
       .then((id) => console.log('Starting export:', id))
       .catch((err) => console.error('Failed to start export:', err))
   }
 })
 
 chrome.downloads.onChanged.addListener(function (delta) {
-  if (delta.state && delta.state.current === 'complete') URL.revokeObjectURL(delta.url)
+  if (delta.state && delta.state.current === 'complete') {
+    console.log('Completed export:', delta.id)
+  }
 })

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "qwiklinks",
   "author": "Ruyi Li",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Access long URLs with short, easy-to-remember names.",
 
   "browser_specific_settings": {
