@@ -14,9 +14,7 @@ Access long URLs with short, easy-to-remember names.
 
 ## Demo
 
-
-https://user-images.githubusercontent.com/16544254/232331720-b34f4b99-e59c-4f8f-b7cd-5798b9488f69.mp4
-
+![Demo](assets/demo_1.gif)
 
 ## Why
 
