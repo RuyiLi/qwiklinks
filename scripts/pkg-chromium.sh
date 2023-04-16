@@ -5,5 +5,6 @@ mkdir -p dist
 cp -r firefox/ui/ firefox/qwiklinks.js chromium/
 shopt -s globstar
 sed -i 's/browser/chrome/' chromium/**/*.js
+rm dist/chromium.zip 2> /dev/null
 cd chromium && zip ../dist/chromium.zip **/*
 echo "Finished building packed extension for Chromium" 
